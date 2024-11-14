@@ -1,5 +1,4 @@
 package eCommerceSaleTrack.tools;
-
 import eCommerceSaleTrack.dal.*;
 import eCommerceSaleTrack.model.*;
 
@@ -111,7 +110,7 @@ public class Inserter {
             System.out.println("Order item deleted: " + (deletedOrderItem == null));
 
       // INSERT operation for OrderPayments
-      OrderPayments orderPayment1 = new OrderPayments("order456", 1, OrderPayments.PaymentType.CREDIT_CARD, 3, 99.99);
+      OrderPayments orderPayment1 = new OrderPayments("order456", 1, OrderPayments.PaymentType.credit_card, 3, 99.99);
       orderPayment1 = orderPaymentsDao.create(orderPayment1);
             System.out.println("Created order payment: " + orderPayment1.getOrderId());
 
@@ -124,7 +123,7 @@ public class Inserter {
 
       // UPDATE operation for OrderPayments
         if (fetchedOrderPayment != null) {
-        OrderPayments updatedOrderPayment = orderPaymentsDao.updatePaymentTypeAndValue(fetchedOrderPayment, OrderPayments.PaymentType.DEBIT, 89.99);
+        OrderPayments updatedOrderPayment = orderPaymentsDao.updatePaymentTypeAndValue(fetchedOrderPayment, OrderPayments.PaymentType.debit_card, 89.99);
         System.out.format("Updated order payment: OrderId=%s, New Type=%s, New Amount=%.2f\n",
             updatedOrderPayment.getOrderId(), updatedOrderPayment.getPaymentType(), updatedOrderPayment.getPaymentValue());
       }
@@ -263,7 +262,7 @@ public class Inserter {
     System.out.println("Seller deleted: " + (deletedSeller == null));
 
     // INSERT operation for Shipping
-    Shipping shipping1 = new Shipping("order789", "cust789", "54321", "CA", 50.0, 500.0, 550.0, new Timestamp(new Date().getTime()));
+    Shipping shipping1 = new Shipping("order789", "cust789", "54321", "CA", 50.0, 500.0, 550.0, new Date());
     shipping1 = shippingDao.create(shipping1);
     System.out.println("Created shipping record with ShippingId: " + shipping1.getShippingId());
 
