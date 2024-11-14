@@ -8,14 +8,14 @@ import java.util.Properties;
 
 /**
  * Use ConnectionManager to connect to your database instance.
- * 
+ *
  * ConnectionManager uses the MySQL Connector/J driver to connect to your local
  * MySQL instance.
- * 
+ *
  * In our example, we will create a DAO (data access object) java class to
  * interact with each MySQL table. The DAO java classes will use
  * ConnectionManager to open and close connections.
- * 
+ *
  * Instructions: 1. Install MySQL Community Server. During installation, you
  * will need to set up a user, password, and port. Keep track of these values.
  * 2. Download and install Connector/J:
@@ -36,7 +36,7 @@ public class ConnectionManager {
 	// User to connect to your database instance. By default, this is "root2".
 	private final String user = "root";
 	// Password for the user.
-	private final String password = "Jc20020317";
+	private final String password = "";
 	// URI to your database server. If running on the same machine, then this is
 	// "localhost".
 	private final String hostName = "localhost";

@@ -1,5 +1,6 @@
 package eCommerceSaleTrack.dal;
 
+import eCommerceSaleTrack.dto.ZipcodeCategoryDTO;
 import eCommerceSaleTrack.model.ProductCategory;
 
 import java.sql.*;
@@ -69,5 +70,39 @@ public class ProductCategoryDAO {
             deleteStmt.executeUpdate();
             return null;
         }
+    }
+
+    public List<ZipcodeCategoryDTO> getCategoriesByZipcode(String zipcode) throws SQLException {
+      List<ZipcodeCategoryDTO> categoryDTOList = new ArrayList<>();
+      try (Connection connection = connectionManager.getConnection();) {
+        PreparedStatement getStmt = connection.prepareStatement("select Customers.CustomerZipCodePrefix, ProductOrder.ProductCategoryNameEnglish, count(*) as Count from Customers\n" +
+                "inner join (\n" +
+                "\tselect C.ProductCategoryNameEnglish, O.CustomerId from (\n" +
+                "\t\t\tselect Products.ProductId, ProductCategory.ProductCategoryNameEnglish \n" +
+                "\t\t\tfrom Products inner join ProductCategory \n" +
+                "\t\t\ton Products.ProductCategoryName = ProductCategory.ProductCategoryName\n" +
+                "\t\t) as C\n" +
+                "\t\tinner join (\n" +
+                "\t\t\tselect Orders.OrderId, Orders.CustomerId, OrderItems.ProductId\n" +
+                "\t\t\tfrom Orders inner join OrderItems\n" +
+                "\t\t\ton Orders.OrderId = OrderItems.OrderId\n" +
+                "\t\t) as O\n" +
+                "\t\ton C.ProductId = O.ProductId\n" +
+                ") as ProductOrder\n" +
+                "on Customers.CustomerId = ProductOrder.CustomerId\n" +
+                "group by Customers.CustomerZipCodePrefix, ProductOrder.ProductCategoryNameEnglish\n" +
+                "having Customers.CustomerZipCodePrefix = ?\n" +
+                "order by count(*) desc");
+        getStmt.setString(1, zipcode);
+        ResultSet rs = getStmt.executeQuery();
+        while (rs.next()) {
+          ZipcodeCategoryDTO zipcodeCategoryDTO = new ZipcodeCategoryDTO();
+          zipcodeCategoryDTO.setCustomerZipCodePrefix(rs.getString("CustomerZipCodePrefix"));
+          zipcodeCategoryDTO.setProductCategoryNameEnglish(rs.getString("ProductCategoryNameEnglish"));
+          zipcodeCategoryDTO.setCount(Integer.parseInt(rs.getString("Count")));
+          categoryDTOList.add(zipcodeCategoryDTO);
+        }
+        return categoryDTOList;
+      }
     }
 }
