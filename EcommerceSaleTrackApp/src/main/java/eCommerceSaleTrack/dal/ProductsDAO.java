@@ -168,4 +168,34 @@ public class ProductsDAO {
       }
     }
   }
+  
+  public List<Products> findTopPurchasedItemsByUserId(String userId) throws SQLException {
+	    List<Products> productList = new ArrayList<>();
+	    String query = "SELECT Products.ProductId, Products.ProductCategoryName, Products.ProductNameLength, COUNT(OrderItems.ProductId) AS PurchaseCount " +
+	                   "FROM Orders " +
+	                   "INNER JOIN OrderItems ON Orders.OrderId = OrderItems.OrderId " +
+	                   "INNER JOIN Products ON OrderItems.ProductId = Products.ProductId " +
+	                   "WHERE Orders.CustomerId = ? " +
+	                   "GROUP BY Products.ProductId " +
+	                   "ORDER BY PurchaseCount DESC " +
+	                   "LIMIT 5";
+
+	    try (Connection connection = connectionManager.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(query)) {
+	        statement.setString(1, userId);
+	        ResultSet resultSet = statement.executeQuery();
+
+	        while (resultSet.next()) {
+	            Products product = new Products();
+	            product.setProductId(resultSet.getString("ProductId"));
+	            product.setProductCategoryName(resultSet.getString("ProductCategoryName"));
+	            product.setProductNameLength(resultSet.getInt("ProductNameLength"));
+	            product.setPurchaseCount(resultSet.getInt("PurchaseCount"));
+	            productList.add(product);
+	        }
+	    }
+	    return productList;
+	}
+
+
 }

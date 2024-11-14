@@ -10,6 +10,7 @@ public class Products {
 	protected int productLengthCm;
 	protected int productHeightCm;
 	protected int productWidthCm;
+	protected int purchaseCount;
 
 	/**
 	 * Construct a Products instance, with input arguments:
@@ -36,6 +37,9 @@ public class Products {
 		this.productHeightCm = productHeightCm;
 		this.productWidthCm = productWidthCm;
 	}
+	
+	public Products() {
+    }
 
 	public String getProductId() {
 		return productId;
@@ -108,5 +112,12 @@ public class Products {
 	public void setProductWidthCm(int productWidthCm) {
 		this.productWidthCm = productWidthCm;
 	}
+	
+	public int getPurchaseCount() {
+        return purchaseCount;
+    }
 
+    public void setPurchaseCount(int purchaseCount) {
+        this.purchaseCount = purchaseCount;
+    }
 }
