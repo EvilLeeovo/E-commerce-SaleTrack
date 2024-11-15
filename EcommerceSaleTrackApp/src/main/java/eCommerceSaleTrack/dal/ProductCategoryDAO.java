@@ -105,4 +105,24 @@ public class ProductCategoryDAO {
         }
       }
 
+    public Map<String, Double> getTotalSalesByCategory() throws SQLException {
+        Map<String, Double> salesByCategory = new HashMap<>();
+        String query = "SELECT ProductCategoryNameEnglish, SUM(OrderItems.price * OrderItems.quantity) AS TotalSales " +
+            "FROM ProductCategory " +
+            "JOIN Products ON ProductCategory.ProductCategoryName = Products.ProductCategoryName " +
+            "JOIN OrderItems ON Products.ProductId = OrderItems.ProductId " +
+            "GROUP BY ProductCategoryNameEnglish;";
+
+        try (Connection connection = connectionManager.getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String category = rs.getString("ProductCategoryNameEnglish");
+                double totalSales = rs.getDouble("TotalSales");
+                salesByCategory.put(category, totalSales);
+            }
+        }
+        return salesByCategory;
+    }
+
 }
