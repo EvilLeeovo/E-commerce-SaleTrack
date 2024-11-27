@@ -196,6 +196,31 @@ public class ProductsDAO {
 	    }
 	    return productList;
 	}
+  
+  public List<Products> getTopSellingProductsByCategory(String categoryName) throws SQLException {
+	    List<Products> productList = new ArrayList<>();
+	    String query = "SELECT Products.ProductId, Products.ProductCategoryName, Products.ProductNameLength, " +
+	                   "COUNT(OrderItems.ProductId) AS SalesCount " +
+	                   "FROM Products " +
+	                   "INNER JOIN OrderItems ON Products.ProductId = OrderItems.ProductId " +
+	                   "WHERE Products.ProductCategoryName = ? " +
+	                   "GROUP BY Products.ProductId " +
+	                   "ORDER BY SalesCount DESC";
 
+	    try (Connection connection = connectionManager.getConnection();
+	         PreparedStatement statement = connection.prepareStatement(query)) {
+	        statement.setString(1, categoryName);
+	        ResultSet resultSet = statement.executeQuery();
 
+	        while (resultSet.next()) {
+	            Products product = new Products();
+	            product.setProductId(resultSet.getString("ProductId"));
+	            product.setProductCategoryName(resultSet.getString("ProductCategoryName"));
+	            product.setProductNameLength(resultSet.getInt("ProductNameLength"));
+	            product.setPurchaseCount(resultSet.getInt("SalesCount")); // Use setPurchaseCount here
+	            productList.add(product);
+	        }
+	    }
+	    return productList;
+	}
 }
