@@ -72,9 +72,30 @@
             color: #777;
             margin-top: 20px;
         }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .back-button a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .back-button a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
+    <div class="back-button">
+        <a href="index.jsp">Return to Home</a>
+    </div>
+
     <h1>Top Selling Products</h1>
 
     <form method="get" action="TopSellingProducts">

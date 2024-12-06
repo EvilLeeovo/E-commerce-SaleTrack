@@ -9,6 +9,7 @@
             color: #333;
             margin: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -17,6 +18,7 @@
             color: #4CAF50;
             text-align: center;
             font-size: 2em;
+            margin-bottom: 20px;
         }
         .main-container {
             display: flex;
@@ -62,6 +64,9 @@
     </style>
 </head>
 <body>
+    <!-- Welcome Title -->
+    <h1>Welcome to E-commerce SaleTrack</h1>
+
     <div class="main-container">
         <!-- Customer Operations Section -->
         <div class="section">

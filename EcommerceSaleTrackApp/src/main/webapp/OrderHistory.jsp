@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
@@ -80,9 +80,29 @@
             font-style: italic;
             color: #777;
         }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px; /* 左上角时改为 left */
+        }
+        .back-button a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .back-button a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
+    <div class="back-button">
+        <a href="index.jsp">Return to Home</a>
+    </div>
     <h1>Order History</h1>
     <form action="getOrderHistoryByCustomerId" method="get">
         <label for="customerId">Customer ID:</label>

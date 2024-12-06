@@ -68,15 +68,37 @@
         .message.error {
             color: red;
         }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .back-button a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .back-button a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
+    <div class="back-button">
+        <a href="index.jsp">Return to Home</a>
+    </div>
     <div class="container">
         <h1>Update Customer</h1>
         <form action="customerupdate" method="post">
             <p>
                 <label for="customerId">Customer ID:</label>
-                <input type="text" id="customerId" name="customerId" placeholder="Enter Customer ID" required />
+                <input type="text" id="customerId" name="customerId" 
+                       value="${param.customerId}" 
+                       placeholder="Enter Customer ID" />
             </p>
             <p>
                 <label for="city">New City:</label>
